@@ -13,6 +13,9 @@ public class MoneyTransferTest {
     DashboardPage dashboardPage;
     CardInfo firstCardInfo;
     CardInfo secondCardInfo;
+    int firstCardBalance;
+    int secondCardBalance;
+
 
     @BeforeEach
     void setup() {
@@ -23,12 +26,12 @@ public class MoneyTransferTest {
         dashboardPage = verificationPage.validVerify(verificationCode);
         firstCardInfo = getFirstCardInfo();
         secondCardInfo = getSecondCardInfo();
+        firstCardBalance = dashboardPage.getCardBalance(firstCardInfo);
+        secondCardBalance = dashboardPage.getCardBalance(secondCardInfo);
     }
 
     @Test
     void shouldTransferFromFirstToSecond() {
-        var firstCardBalance = dashboardPage.getCardBalance(firstCardInfo);
-        var secondCardBalance = dashboardPage.getCardBalance(secondCardInfo);
         var amount = generateValidAmount(firstCardBalance);
         var expectedBalanceFirstCard = firstCardBalance - amount;
         var expectedBalanceSecondCard = secondCardBalance - amount;
